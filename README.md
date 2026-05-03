@@ -127,23 +127,23 @@ exit
 
 Here are some realistic upgrades you can implement:
 
-🔐 Security & Authentication
+### 🔐 Security & Authentication
   - Add QR code expiration & encryption
   - Implement 2FA for admins
   - Prevent duplicate scans / spoofing
-📱 User Experience
+### 📱 User Experience
   - Mobile-friendly scanning interface
   - Progressive Web App (PWA) support
   - Real-time attendance dashboard
-📊 Analytics & Reports
+### 📊 Analytics & Reports
   - Export attendance (CSV / PDF)
   - Attendance summaries per event
   - Participant performance tracking
-⚡ System Enhancements
+### ⚡ System Enhancements
   - Live scan validation (WebSockets)
   - Email notifications for attendance
   - API support for mobile apps
-🧩 Code Improvements
+### 🧩 Code Improvements
   - Optimize repeated queries in EventParticipant (use relationships instead of find())
   - Add eager loading to improve performance
   - Use policies for better authorization handling
@@ -152,7 +152,7 @@ Here are some realistic upgrades you can implement:
 
 ## 🤝 Contribution
 
-This project is open for learning and improvement. Feel free to fork, modify, and contribute.
+This project is open for learning and improvement. Feel free to fork, modify, and contribute. I will also do code reviews per pr.
 
 ---
 
