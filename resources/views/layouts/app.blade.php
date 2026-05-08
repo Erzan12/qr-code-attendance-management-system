@@ -60,7 +60,8 @@
         <!-- Brand Logo -->
         <a href="/" class="brand-link">
             @laravelPWA
-            <img src="https://trace.southernleyte.org.ph/assets/img/slsu-logo.png" alt="AdminLTE Logo"
+            {{-- <img src="https://trace.southernleyte.org.ph/assets/img/slsu-logo.png" alt="AdminLTE Logo" --}}
+            <img src="/images/AdminLTELogo.png" alt="AdminLTE Logo"
                  class="brand-image img-circle elevation-3"
                  style="opacity: .8">
             <span class="brand-text font-weight-light">SLSU - EVENT</span>
