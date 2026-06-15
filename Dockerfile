@@ -53,5 +53,6 @@ RUN php artisan config:clear && php artisan cache:clear
 # Recommended startup sequence
 CMD php artisan optimize:clear && \
     php artisan migrate --force && \
+    php artisan storage:link && \
     php artisan config:cache && \
     php artisan serve --host=0.0.0.0 --port=10000
