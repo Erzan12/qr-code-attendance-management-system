@@ -10,7 +10,7 @@ RUN apt-get install -y \
     zip \
     unzip
 
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+# RUN curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 
 RUN apt-get update && apt-get install -y \
     nodejs \
@@ -23,13 +23,13 @@ RUN apt-get update && apt-get install -y \
     libreadline-dev \
     libfreetype6-dev
 
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+# ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+# RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+# RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 RUN a2enmod rewrite headers
 
-RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+# RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 
 RUN docker-php-ext-install \
