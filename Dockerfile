@@ -15,6 +15,8 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libicu-dev \
     libbz2-dev \
+    libpq-dev \
+    libzip-dev \
     libpng-dev \
     libjpeg-dev \
     libmcrypt-dev \
