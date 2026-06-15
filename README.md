@@ -1,7 +1,7 @@
 # 📌 QCAMS – QR Code Attendance Management System
 
 A Laravel-based QR Code Attendance Management System designed for students and faculty to easily record attendance during events through QR code scanning.
-QCAMS simplifies attendance tracking by replacing manual logs with a fast, secure, and contactless solution.
+QCAMS simplifies attendance tracking by replacing manual logs with a fast, secure, and contactless solution and this is also a Freelance Project.
 
 ---
 
