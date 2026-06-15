@@ -1,4 +1,4 @@
-FROM php:8.1-apache
+FROM php:8.2-cli
 
 RUN apt-get update
 
@@ -44,10 +44,13 @@ RUN docker-php-ext-install \
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-ARG uid
-RUN useradd -G www-data,root -u $uid -d /home/devuser devuser
-RUN mkdir -p /home/devuser/.composer && \
-    chown -R devuser:devuser /home/devuser
+WORKDIR /var/www
+COPY . .
+
+# ARG uid
+# RUN useradd -G www-data,root -u $uid -d /home/devuser devuser
+# RUN mkdir -p /home/devuser/.composer && \
+#     chown -R devuser:devuser /home/devuser
 
 # Clear any stale defaults before packaging the image
 RUN php artisan config:clear && php artisan cache:clear
