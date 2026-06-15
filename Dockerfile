@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-configure gd \
     --with-freetype \
-    --with-jpeg \
+    --with-jpeg
 
 RUN docker-php-ext-install \
     bz2 \
