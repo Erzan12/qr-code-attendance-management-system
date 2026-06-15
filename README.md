@@ -27,6 +27,7 @@ The system records:
 - 🔐 Role-based authentication (Admin, Student, Faculty)
 - 🗃 Soft delete support for data recovery
 - ⚡ Dockerized setup for easy development
+- 📋 Generate Reports
 
 ---
 
