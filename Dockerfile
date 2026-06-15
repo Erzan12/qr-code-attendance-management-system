@@ -1,33 +1,32 @@
 FROM php:8.2-cli
 
-RUN apt-get update
-
-# Install system dependencies
-RUN apt-get install -y \
+# Combine all system dependencies into one layer and clean up cache
+RUN apt-get update && apt-get install -y \
     sudo \
     git \
     curl \
     zip \
-    unzip
-
-RUN apt-get update && apt-get install -y \
-    nodejs \
+    unzip \
     libzip-dev \
     libicu-dev \
     libbz2-dev \
     libpq-dev \
-    libzip-dev \
     libpng-dev \
     libjpeg-dev \
     libmcrypt-dev \
     libreadline-dev \
-    libfreetype6-dev
+    libfreetype6-dev \
+    ca-certificates \
+    gnupg \
+    && mkdir -p /etc/apt/keyrings \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
+    && apt-get update && apt-get install nodejs -y \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-configure gd \
-    --with-freetype \
-    --with-jpeg
-
-RUN docker-php-ext-install \
+# Configure and install PHP extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install \
     bz2 \
     intl \
     iconv \
@@ -39,19 +38,24 @@ RUN docker-php-ext-install \
     gd \
     zip
 
+# Get Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
+
+# Optimization: Copy dependency files first to leverage Docker cache
+COPY composer.json composer.lock package.json package-lock.json* ./
+
+# Install dependencies without copying whole project yet
+RUN composer install --no-dev --no-scripts --no-autoloader \
+    && npm ci
+
+# Now copy the rest of the application
 COPY . .
 
-# Install PHP deps
-RUN composer install --no-dev --optimize-autoloader
-
-# Install Node deps and build Vite assets
-RUN npm ci && npm run build
-
-# Clear any stale defaults before packaging the image
-RUN php artisan config:clear && php artisan cache:clear
+# Finish composer autoload optimization and build frontend assets
+RUN composer dump-autoload --no-dev --optimize \
+    && npm run build
 
 # Recommended startup sequence
 CMD php artisan optimize:clear && \
