@@ -47,6 +47,10 @@ COPY . .
 # Install PHP deps
 RUN composer install --no-dev --optimize-autoloader
 
+# Install Node deps and build Vite assets
+RUN npm install
+RUN npm run build
+
 # Clear any stale defaults before packaging the image
 RUN php artisan config:clear && php artisan cache:clear
 
