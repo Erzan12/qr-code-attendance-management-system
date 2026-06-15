@@ -36,6 +36,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 COPY . .
 
+# Install PHP deps
+RUN composer install --no-dev --optimize-autoloader
+
 # Clear any stale defaults before packaging the image
 RUN php artisan config:clear && php artisan cache:clear
 
