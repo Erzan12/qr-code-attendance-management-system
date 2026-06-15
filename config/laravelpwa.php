@@ -13,35 +13,43 @@ return [
         'status_bar' => 'black',
         'icons' => [
             '72x72' => [
-                'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                // 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                'path' => '/images/AdminLTELogo.png',
                 'purpose' => 'any',
             ],
             '96x96' => [
-                'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                // 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                'path' => '/images/AdminLTELogo.png',
                 'purpose' => 'any',
             ],
             '128x128' => [
-                'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                // 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                'path' => '/images/AdminLTELogo.png',
                 'purpose' => 'any',
             ],
             '144x144' => [
-                'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                // 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                'path' => '/images/AdminLTELogo.png',
                 'purpose' => 'any',
             ],
             '152x152' => [
-                'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                // 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                'path' => '/images/AdminLTELogo.png',
                 'purpose' => 'any',
             ],
             '192x192' => [
-                'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                // 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                'path' => '/images/AdminLTELogo.png',
                 'purpose' => 'any',
             ],
             '384x384' => [
-                'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                // 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                'path' => '/images/AdminLTELogo.png',
                 'purpose' => 'any',
             ],
             '512x512' => [
-                'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                // 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                'path' => '/images/AdminLTELogo.png',
                 'purpose' => 'any',
             ],
         ],
@@ -63,7 +71,8 @@ return [
                 'description' => 'Shortcut Link 1 Description',
                 'url' => '/',
                 'icons' => [
-                    'src' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                    // 'src' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                    'src' => '/images/AdminLTELogo.png',
                     'purpose' => 'any',
                 ],
             ],

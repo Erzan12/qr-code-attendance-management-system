@@ -48,3 +48,12 @@ ARG uid
 RUN useradd -G www-data,root -u $uid -d /home/devuser devuser
 RUN mkdir -p /home/devuser/.composer && \
     chown -R devuser:devuser /home/devuser
+
+# Clear any stale defaults before packaging the image
+RUN php artisan config:clear && php artisan cache:clear
+
+# Recommended startup sequence
+CMD php artisan optimize:clear && \
+    php artisan migrate --force && \
+    php artisan config:cache && \
+    php artisan serve --host=0.0.0.0 --port=10000
