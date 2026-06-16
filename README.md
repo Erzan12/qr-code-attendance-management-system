@@ -159,6 +159,12 @@ This project is open for learning and improvement. Feel free to fork, modify, an
 
 ---
 
+## 👤 Author
+
+Earl Jan Do -Erzan
+
+---
+
 ## 📄 License
 
 This project is for educational and development purposes.
