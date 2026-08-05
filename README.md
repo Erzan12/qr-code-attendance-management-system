@@ -167,6 +167,6 @@ Earl Jan Do -Erzan
 
 ## 📄 License
 
-This project is for educational and development purposes.
+This project is one of my Freelanced Project.
 
 ---
