@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ScanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
+    // Route::get('/scan/{qrCode}', [ScanController::class, 'show']);
+    Route::post('/scan', [ScanController::class, 'store']);
+    Route::get('/scan', [ScanController::class, 'show']); // was /scan/{qrCode}
 });
