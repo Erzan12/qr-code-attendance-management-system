@@ -19,3 +19,4 @@ yarn-error.log
 
 .docker
 ! .docker/mysql
+.env.production.example

@@ -158,6 +158,6 @@ This project is open for learning and improvement. Feel free to fork, modify, an
 
 ## 📄 License
 
-This project is for educational and development purposes.
+This project is one of my Freelanced Project.
 
 ---
