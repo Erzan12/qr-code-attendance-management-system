@@ -58,7 +58,7 @@ class ScanController extends Controller
 
     public function store(Request $request)
     {
-        if (! $request->has('user_id') && ! $request->has('user_type')) {
+        if (! $request->has('user_id') || ! $request->has('user_type')) {
             return back()->with('fail', 'Error when submitting information, Please try again!');
         }
 
