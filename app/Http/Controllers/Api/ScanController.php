@@ -13,11 +13,10 @@ use Illuminate\Support\Facades\Crypt;
 
 class ScanController extends Controller
 {
-    public function show($qrCode)
+    public function show(Request $request)
     {
-        if (! $qrCode) {
-            return response()->json(['status' => false, 'message' => 'No QR code provided'], 422);
-        }
+        $request->validate(['qr_code' => 'required|string']);
+        $qrCode = $request->query('qr_code');
 
         try {
             $decodedString = Crypt::decryptString($qrCode);
