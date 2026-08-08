@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ScanController;
 use App\Http\Controllers\Api\QrCodeController;
+use App\Http\Controllers\Api\EventController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,4 +31,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/scan', [ScanController::class, 'store']);
     Route::get('/scan', [ScanController::class, 'show']); // was /scan/{qrCode}
     Route::get('/my-qrcode', [QrCodeController::class, 'myQrCode']);
+    Route::get('/events', [EventController::class, 'index']);
+    Route::get('/events/{event}', [EventController::class, 'show']);
 });
