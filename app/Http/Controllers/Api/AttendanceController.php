@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use App\Models\EventParticipant;
 use App\Http\Controllers\Controller;
+use App\Models\EventParticipant;
+use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {

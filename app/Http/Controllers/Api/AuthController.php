@@ -27,17 +27,17 @@ class AuthController extends Controller
 
         return response()->json([
             'token' => $user->createToken('expo-app')->plainTextToken,
-            'user'  => [
-                'id'            => $user->id,
-                'username'      => $user->username,
-                'account_type'  => $user->account_type,
-                'role'          => [
-                    User::ADMIN   => 'admin',
+            'user' => [
+                'id' => $user->id,
+                'username' => $user->username,
+                'account_type' => $user->account_type,
+                'role' => [
+                    User::ADMIN => 'admin',
                     User::STUDENT => 'student',
                     User::FACULTY => 'faculty',
                 ][$user->account_type] ?? null,
-                'name'      => $user->getName(),
-                'profile'   => $user->getUser(),
+                'name' => $user->getName(),
+                'profile' => $user->getUser(),
             ],
         ]);
     }

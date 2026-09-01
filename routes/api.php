@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\ScanController;
-use App\Http\Controllers\Api\QrCodeController;
-use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\AttendanceController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\QrCodeController;
+use App\Http\Controllers\Api\ScanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
