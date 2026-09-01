@@ -37,6 +37,28 @@ The system records:
 - Database: MySQL Note: will be migrating to postgres for supabase support as I will deploy this project for demo purposes
 - Containerization: Docker
 
+## ✓ Lint Check and Test
+1. To see errors without fixing them (Lint Mode):
+```bash
+./vendor/bin/pint --test
+```
+
+2. To automatically fix formatting errors: 
+```bash
+./vendor/bin/pint
+```
+
+3. Blade Template Linting
+1. Installation:
+```bash
+composer require --dev magentron/laravel-blade-lint
+```
+
+2. Command:
+```bash
+php artisan blade:lint
+```
+
 ## 📦 Installation Guide
 1. Clone the Repository
 ```bash
