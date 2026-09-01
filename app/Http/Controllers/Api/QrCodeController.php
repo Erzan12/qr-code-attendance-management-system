@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Crypt;
 
 class QrCodeController extends Controller
 {
-    public function myQrCode(Request $request) 
+    public function myQrCode(Request $request)
     {
         $user = $request->user();
 
