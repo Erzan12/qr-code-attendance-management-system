@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\EventParticipant;
 use App\Models\Faculty;
-use App\Models\Student;
 use App\Models\Notification;
+use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Crypt;
 class ScanController extends Controller
 {
     private const LATE_THRESHOLD_MINUTES = 10; // 0-10 min after start = on time
+
     private const LOGIN_CUTOFF_MINUTES = 30; // 30+ min after start = rejected
 
     public function show(Request $request)
