@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\EventParticipant;
 use App\Models\Faculty;
 use App\Models\Student;
+use App\Models\Notification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -111,6 +112,18 @@ class ScanController extends Controller
                 'time_in' => $now->format('Y-m-d H:i:s'),
                 'is_present' => EventParticipant::STATUS_LOGIN_ONLY,
                 'login_remark' => $remark,
+            ]);
+
+            Notification::create([
+                'event_id' => $event->id,
+                'event_participant_id' => $participant->id,
+                'user_id' => $participant->user_id,
+                'user_type' => $participant->user_type,
+                'type' => $remark === 'late' ? 'late_warning' : 'login_open',
+                'title' => $remark === 'late' ? 'Logged In Late' : 'Logged In',
+                'message' => $remark === 'late'
+                    ? "You logged in late for \"{$event->title}\"."
+                    : "You've successfully logged in for \"{$event->title}\".",
             ]);
 
             return response()->json([
