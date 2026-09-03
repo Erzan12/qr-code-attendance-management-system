@@ -30,15 +30,35 @@ class NotificationController extends Controller
         ]);
     }
 
+    public function markUnread(Request $request, Notification $notification)
+    {
+        $user = $request->user();
+
+        if (
+            $notification->user_id != $user->user_id ||
+            $notification->user_type !== $user->account_type
+        ) {
+            abort(403);
+        }
+
+        $notification->update([
+            'read_at' => null,
+        ]);
+
+        return response()->json([
+            'status' => true,
+        ]);
+    }
+
     public function markRead(Request $request, Notification $notification)
     {
         $user = $request->user();
 
-        if ($notification->user_id != $user->user_id || $notificaiton->user_type !== $user->account_type) {
+        if ($notification->user_id != $user->user_id || $notification->user_type !== $user->account_type) {
             abort(403);
         }
 
-        $notificaiton->update(['read_at' => now()]);
+        $notification->update(['read_at' => now()]);
 
         return response()->json(['status' => true]);
     }
