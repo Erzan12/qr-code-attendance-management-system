@@ -73,4 +73,22 @@ class NotificationController extends Controller
 
         return response()->json(['status' => true]);
     }
+
+    public function destroy(Request $request, Notification $notification)
+    {
+        $user = $request->user();
+
+        if (
+            $notification->user_id != $user->user_id ||
+            $notification->user_type !== $user->account_type
+        ) {
+            abort(403);
+        }
+
+        $notification->delete();
+
+        return response()->json([
+            'status' => true,
+        ]);
+    }
 }

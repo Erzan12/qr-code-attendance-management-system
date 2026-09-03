@@ -44,4 +44,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead']);
     Route::post('/notifications/{notification}/read', [NotificationController::class, 'markRead']);
     Route::post('/notifications/{notification}/unread', [NotificationController::class, 'markUnread']);
+    Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy']);
 });
