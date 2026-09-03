@@ -6,6 +6,7 @@ use App\Mail\InviteParticipantEmail;
 use App\Models\Event;
 use App\Models\EventParticipant;
 use App\Models\Faculty;
+use App\Models\Notification;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -72,6 +73,17 @@ class EventParticipantController extends Controller
 
             if ($user) {
                 Mail::to($user->email)->send(new InviteParticipantEmail($event, $user));
+            }
+
+            if ($user) {
+                Notification::create([
+                    'event_id' => $request->event,
+                    'user_id' => $datum[0],
+                    'user_type' => $datum[1],
+                    'type' => 'added_to_event',
+                    'title' => 'Added to Event',
+                    'message' => "You've been added to \"{$event->title}\" on {$event->date}.",
+                ]);
             }
 
             return $participant;
