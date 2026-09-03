@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Crypt;
 
 class ScanController extends Controller
 {
+    private const LATE_THRESHOLD_MINUTES = 10; // 0-10 min after start = on time
+    private const LOGIN_CUTOFF_MINUTES = 30; // 30+ min after start = rejected
+
     public function show(Request $request)
     {
         $request->validate(['qr_code' => 'required|string']);
@@ -75,29 +78,75 @@ class ScanController extends Controller
             return response()->json(['status' => false, 'message' => 'Unable to proceed, event date does not match today\'s date'], 422);
         }
 
-        $timeNow = now('Asia/Singapore')->format('Y-m-d H:i:s');
+        // $timeNow = now('Asia/Singapore')->format('Y-m-d H:i:s');
+        $now = now('Asia/Singapore');
+        $startTime = Carbon::parse($event->date.' '.$event->time_start, 'Asia/Singapore');
+        $endTime = Carbon::parse($event->date.' '.$event->time_end, 'Asia/Singapore');
+
+        // if ($participant->is_present == EventParticipant::STATUS_NONE) {
+        //     if ($timeNow <= Carbon::parse($event->date.' '.$event->time_start)->addHour()->format('Y-m-d H:i:s')) {
+        //         $participant->update([
+        //             'time_in' => now('Asia/Singapore')->format('Y-m-d H:i:s'),
+        //             'is_present' => 1,
+        //         ]);
+
+        //         return response()->json(['status' => true, 'message' => 'Participant successfully logged in', 'participant' => $participant]);
+        //     }
+
+        //     return response()->json(['status' => false, 'message' => 'Login window has passed'], 422);
+        // }
 
         if ($participant->is_present == EventParticipant::STATUS_NONE) {
-            if ($timeNow <= Carbon::parse($event->date.' '.$event->time_start)->addHour()->format('Y-m-d H:i:s')) {
-                $participant->update([
-                    'time_in' => now('Asia/Singapore')->format('Y-m-d H:i:s'),
-                    'is_present' => 1,
-                ]);
+            $minutesSinceStart = $now->greaterThan($startTime) ? $startTime->diffInMinutes($now) : 0;
 
-                return response()->json(['status' => true, 'message' => 'Participant successfully logged in', 'participant' => $participant]);
+            if ($minutesSinceStart >= self::LOGIN_CUTOFF_MINUTES) {
+                $participant->update(['is_present' => EventParticipant::STATUS_ABSENT]);
+
+                return response()->json(['status' => false, 'message' => 'Login window has closed. Marked as absent.'], 422);
             }
 
-            return response()->json(['status' => false, 'message' => 'Login window has passed'], 422);
+            $remark = $minutesSinceStart >= self::LATE_THRESHOLD_MINUTES ? 'late' : 'on_time';
+
+            $participant->update([
+                'time_in' => $now->format('Y-m-d H:i:s'),
+                'is_present' => EventParticipant::STATUS_LOGIN_ONLY,
+                'login_remark' => $remark,
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => $remark === 'late' ? 'Logged in - mark as LATE' : 'Sucessfully logged in - on time',
+                'remark' => $remark,
+                'partipant' => $participant,
+            ]);
         }
 
+        // if ($participant->is_present == EventParticipant::STATUS_LOGIN_ONLY) {
+        //     if ($timeNow <= Carbon::parse($event->date.' '.$event->time_end)->addHour()->format('Y-m-d H:i:s')) {
+        //         $participant->update([
+        //             'time_out' => now('Asia/Singapore')->format('Y-m-d H:i:s'),
+        //             'is_present' => 2,
+        //         ]);
+
+        //         return response()->json(['status' => true, 'message' => 'Participant successfully logged out', 'participant' => $participant]);
+        //     }
+
+        //     return response()->json(['status' => false, 'message' => 'Logout window has passed'], 422);
+        // }
+
         if ($participant->is_present == EventParticipant::STATUS_LOGIN_ONLY) {
-            if ($timeNow <= Carbon::parse($event->date.' '.$event->time_end)->addHour()->format('Y-m-d H:i:s')) {
+            // Logout window opens at event end time, not before
+            if ($now->lessThan($endTime)) {
+                return response()->json(['status' => false, 'message' => 'Logout is only available once the event has ended'], 422);
+            }
+
+            if ($now->lessThanOrEqualTo($endTime->copy()->addHour())) {
                 $participant->update([
-                    'time_out' => now('Asia/Singapore')->format('Y-m-d H:i:s'),
-                    'is_present' => 2,
+                    'time_out' => $now->format('Y-m-d H:i:s'),
+                    'is_present' => EventParticipant::STATUS_PRESENT,
                 ]);
 
-                return response()->json(['status' => true, 'message' => 'Participant successfully logged out', 'participant' => $participant]);
+                return response()->json(['status' => true, 'message' => 'Successfully logged out', 'participant' => $participant]);
             }
 
             return response()->json(['status' => false, 'message' => 'Logout window has passed'], 422);
