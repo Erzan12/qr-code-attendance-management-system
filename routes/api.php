@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\QrCodeController;
 use App\Http\Controllers\Api\ScanController;
+use App\Http\Controllers\Api\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,4 +36,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/my-qrcode', [QrCodeController::class, 'myQrCode']);
     Route::get('/events', [EventController::class, 'index']);
     Route::get('/events/{event}', [EventController::class, 'show']);
+
+    // Notifications
+    Route::get('/notificaitons', [NotificationController::class, 'index']);
+    Route::get('/notifications/unread-count', [NotificationController::class, 'unreadCount']);
+    Route::get('/notifications/{notification}/read', [NotificationController::class, 'markRead']);
+    Route::get('/notifications/read-all', [NotificationController::class, 'markAllRead']);
 });
