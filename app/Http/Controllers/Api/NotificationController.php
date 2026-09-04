@@ -28,7 +28,7 @@ class NotificationController extends Controller
         return response()->json([
             'count' => Notification::forUser(
                 $user->user_id,
-                $user->user_account_type
+                $user->account_type
             )
             ->unread()
             ->count(),
